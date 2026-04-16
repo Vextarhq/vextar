@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vextar — Build anything. No code needed.</title>
+<link href="index_files/css2.css" rel="stylesheet">
+<style>
+  :root {
+    --black:   #0a0a0a;
+    --white:   #ffffff;
+    --cyan:    #00aacc;
+    --orange:  #e05c00;
+    --gray:    #f5f5f5;
+    --gray2:   #e8e8e8;
+    --muted:   #666666;
+    --border:  #e2e2e2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Archivo', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+
+  /* Symbol mini */
+  .logo-sym {
+    width: 38px;
+    height: 38px;
+    background: #fff;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .logo-sym svg { width: 26px; height: 26px; }
+
+  .logo-word {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--black);
+  }
+
+  .logo-word .v { color: var(--cyan); }
+  .logo-word .dot { color: var(--orange); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--black); }
+
+  .nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn-ghost {
+    padding: 9px 20px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--black);
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'Archivo', sans-serif;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--black);
+  }
+
+  .btn-primary {
+    padding: 9px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--black);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'Archivo', sans-serif;
+  }
+
+  .btn-primary:hover {
+    background: #222;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 160px 48px 100px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: #f0fffe;
+    border: 1px solid #b3eaf5;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cyan);
+    margin-bottom: 28px;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-badge .dot-pulse {
+    width: 6px;
+    height: 6px;
+    background: var(--cyan);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-size: clamp(44px, 5vw, 64px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    color: var(--black);
+  }
+
+  .hero h1 .accent { color: var(--cyan); }
+
+  .hero p {
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin-bottom: 40px;
+    font-weight: 400;
+    max-width: 480px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-hero {
+    padding: 16px 32px;
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Archivo', sans-serif;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-hero:hover {
+    background: #111;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
+
+  .btn-hero-outline {
+    padding: 16px 32px;
+    background: transparent;
+    color: var(--black);
+    border: 2px solid var(--black);
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Archivo', sans-serif;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-hero-outline:hover {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .hero-note {
+    margin-top: 18px;
+    font-size: 13px;
+    color: #999;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Hero demo panel */
+  .hero-demo {
+    background: #0d1117;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+    animation: slideIn 0.8s 0.2s ease both;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .demo-bar {
+    padding: 14px 20px;
+    background: #161b22;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #21262d;
+  }
+
+  .demo-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .demo-title {
+    margin-left: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: #8b949e;
+  }
+
+  .demo-body {
+    padding: 28px 28px 20px;
+  }
+
+  .demo-prompt {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+
+  .demo-prompt-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: #8b949e;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-family: 'Fira Code', monospace;
+  }
+
+  .demo-prompt-text {
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    color: #e6edf3;
+    line-height: 1.6;
+  }
+
+  .demo-prompt-text .hl { color: #79c0ff; }
+  .demo-prompt-text .hl2 { color: #7ee787; }
+
+  .demo-output {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #21262d;
+  }
+
+  .demo-output-header {
+    background: #161b22;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .demo-output-header span {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: #8b949e;
+  }
+
+  .demo-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: #7ee787;
+  }
+
+  .demo-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #7ee787;
+    border-radius: 50%;
+  }
+
+  .demo-code {
+    padding: 16px;
+    background: #0d1117;
+  }
+
+  .code-line {
+    font-family: 'Fira Code', monospace;
+    font-size: 11.5px;
+    line-height: 1.8;
+    color: #8b949e;
+    white-space: nowrap;
+  }
+
+  .code-line .kw  { color: #ff7b72; }
+  .code-line .fn  { color: #d2a8ff; }
+  .code-line .str { color: #a5d6ff; }
+  .code-line .val { color: #7ee787; }
+  .code-line .cm  { color: #6e7681; font-style: italic; }
+  .code-line .num { color: #f8c555; }
+
+  /* ─── LOGOS BAR ─── */
+  .logos-bar {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 48px;
+    background: var(--gray);
+  }
+
+  .logos-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .logos-label {
+    font-size: 12px;
+    color: #999;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-right: 40px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .logos-list {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .logo-item {
+    font-size: 15px;
+    font-weight: 700;
+    color: #bbb;
+    letter-spacing: -0.02em;
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .section {
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    color: var(--black);
+  }
+
+  .section-sub {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.65;
+    max-width: 520px;
+    margin-bottom: 64px;
+  }
+
+  /* Steps */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .step {
+    padding: 36px;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    position: relative;
+    transition: all 0.25s;
+  }
+
+  .step:hover {
+    border-color: var(--cyan);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,170,204,0.08);
+  }
+
+  .step-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--black);
+    margin-bottom: 20px;
+    font-family: 'Fira Code', monospace;
+  }
+
+  .step-num.active {
+    background: var(--cyan);
+    color: white;
+  }
+
+  .step h3 {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .step p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ─── FEATURES ─── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .feature {
+    background: var(--white);
+    padding: 40px 36px;
+    transition: background 0.2s;
+  }
+
+  .feature:hover {
+    background: #fafffe;
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--gray);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .feature h3 {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+
+  .feature p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ─── PRICING ─── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .plan {
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    transition: all 0.25s;
+  }
+
+  .plan:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 50px rgba(0,0,0,0.08);
+  }
+
+  .plan.featured {
+    border-color: var(--black);
+    border-width: 2px;
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .plan-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--cyan);
+    color: var(--white);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .plan-name {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .plan-desc {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .plan.featured .plan-desc { color: #aaa; }
+
+  .plan-price {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    margin-bottom: 32px;
+  }
+
+  .plan-price .amount {
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .plan-price .per {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .plan.featured .plan-price .per { color: #aaa; }
+
+  .plan-features {
+    list-style: none;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .plan-features li {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--black);
+  }
+
+  .plan.featured .plan-features li { color: #ddd; }
+
+  .plan-features li::before {
+    content: '✓';
+    width: 20px;
+    height: 20px;
+    background: #f0fffe;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--cyan);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .plan.featured .plan-features li::before {
+    background: rgba(0,170,204,0.2);
+  }
+
+  .btn-plan {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Archivo', sans-serif;
+    transition: all 0.2s;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    border: 2px solid var(--black);
+    background: transparent;
+    color: var(--black);
+  }
+
+  .btn-plan:hover {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .plan.featured .btn-plan {
+    background: var(--cyan);
+    border-color: var(--cyan);
+    color: var(--white);
+  }
+
+  .plan.featured .btn-plan:hover {
+    background: #009ab8;
+    border-color: #009ab8;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials {
+    background: var(--gray);
+    padding: 100px 48px;
+  }
+
+  .testimonials-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .testi {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 32px;
+    border: 1px solid var(--border);
+  }
+
+  .testi-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--black);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .testi-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--gray2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--black);
+    flex-shrink: 0;
+  }
+
+  .testi-name {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .testi-role {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 16px;
+  }
+
+  .star { color: #f5a623; font-size: 14px; }
+
+  /* ─── CTA FINAL ─── */
+  .cta-final {
+    padding: 120px 48px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .cta-final h2 {
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+
+  .cta-final h2 .accent { color: var(--cyan); }
+
+  .cta-final p {
+    font-size: 18px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px;
+    background: var(--white);
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: -0.03em;
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .footer-logo .v { color: var(--cyan); }
+  .footer-logo .dot { color: var(--orange); }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--black); }
+
+  .footer-copy {
+    font-size: 13px;
+    color: #bbb;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .hero { grid-template-columns: 1fr; padding: 120px 24px 60px; gap: 40px; }
+    .steps { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .section { padding: 60px 24px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <!-- Mini symbol -->
+    <div class="logo-sym">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" fill="white" stroke="#e2e2e2" stroke-width="1"></circle>
+        <!-- Code chars small -->
+        <text x="8" y="13" font-family="monospace" font-size="6" fill="#333" font-weight="700">{}</text>
+        <text x="24" y="13" font-family="monospace" font-size="6" fill="#333" font-weight="700">[]</text>
+        <text x="5" y="22" font-family="monospace" font-size="7" fill="#555" font-weight="700">(</text>
+        <text x="30" y="22" font-family="monospace" font-size="7" fill="#555" font-weight="700">)</text>
+        <text x="8" y="31" font-family="monospace" font-size="6" fill="#333" font-weight="700">&lt;/&gt;</text>
+        <!-- V center -->
+        <text x="14" y="26" font-family="Archivo,sans-serif" font-size="13" fill="#00aacc" font-weight="900">V</text>
+      </svg>
+    </div>
+    <span class="logo-word"><span class="v">v</span>extar<span class="dot">.</span></span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+
+  <div class="nav-cta">
+    <a href="#" class="btn-ghost">Log in</a>
+    <a href="#" class="btn-primary">Start free →</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div>
+    <div class="hero-badge">
+      <div class="dot-pulse"></div>
+      Now live — Free to start
+    </div>
+    <h1>Describe it.<br><span class="accent">Vextar</span> builds it.</h1>
+    <p>Turn any idea into a fully functional app — no coding required. 
+Just describe what you want in plain English and get production-ready 
+code in seconds.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-hero">Build your app free →</a>
+      <a href="#how" class="btn-hero-outline">See how it works</a>
+    </div>
+    <div class="hero-note">
+      ✓ No credit card required &nbsp;·&nbsp; ✓ 3 free builds
+    </div>
+  </div>
+
+  <!-- Demo panel -->
+  <div class="hero-demo">
+    <div class="demo-bar">
+      <div class="demo-dot" style="background:#ff5f57"></div>
+      <div class="demo-dot" style="background:#febc2e"></div>
+      <div class="demo-dot" style="background:#28c840"></div>
+      <span class="demo-title">vextar — app builder</span>
+    </div>
+    <div class="demo-body">
+      <div class="demo-prompt">
+        <div class="demo-prompt-label">Your prompt</div>
+        <div class="demo-prompt-text">
+          Build me <span class="hl">a SaaS dashboard</span> with user login,<br>
+          <span class="hl2">analytics charts</span> and a subscription page
+        </div>
+      </div>
+      <div class="demo-output">
+        <div class="demo-output-header">
+          <span>Generated code</span>
+          <span class="demo-status">Built in 3.2s</span>
+        </div>
+        <div class="demo-code">
+          <div class="code-line"><span class="kw">import</span> { <span class="fn">Dashboard</span> } <span class="kw">from</span> <span class="str">'./components'</span></div>
+          <div class="code-line"><span class="kw">import</span> { <span class="fn">useAuth</span>, <span class="fn">useAnalytics</span> } <span class="kw">from</span> <span class="str">'./hooks'</span></div>
+          <div class="code-line">&nbsp;</div>
+          <div class="code-line"><span class="kw">export default function</span> <span class="fn">App</span>() {</div>
+          <div class="code-line">&nbsp;&nbsp;<span class="kw">const</span> { <span class="fn">user</span>, <span class="fn">login</span> } = <span class="fn">useAuth</span>()</div>
+          <div class="code-line">&nbsp;&nbsp;<span class="kw">const</span> { <span class="fn">data</span> } = <span class="fn">useAnalytics</span>({ <span class="fn">days</span>: <span class="num">30</span> })</div>
+          <div class="code-line">&nbsp;</div>
+          <div class="code-line">&nbsp;&nbsp;<span class="kw">return</span> &lt;<span class="fn">Dashboard</span></div>
+          <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">user</span>={user}</div>
+          <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">analytics</span>={data}</div>
+          <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">subscription</span>={<span class="val">true</span>}</div>
+          <div class="code-line">&nbsp;&nbsp;/&gt;</div>
+          <div class="code-line">}</div>
+          <div class="code-line">&nbsp;</div>
+          <div class="code-line"><span class="cm">// ✓ Auth ready · Charts ready · Stripe ready</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LOGOS BAR ═══ -->
+<div class="logos-bar">
+  <div class="logos-inner">
+    <span class="logos-label">Trusted by builders at</span>
+    <div class="logos-list">
+      <span class="logo-item">Shopify</span>
+      <span class="logo-item">Notion</span>
+      <span class="logo-item">Linear</span>
+      <span class="logo-item">Vercel</span>
+      <span class="logo-item">Stripe</span>
+      <span class="logo-item">Figma</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="section fade-in visible" id="how">
+  <div class="section-tag">How it works</div>
+  <h2 class="section-title">From idea to app<br>in 3 simple steps</h2>
+  <p class="section-sub">No tutorials, no setup, no code. Just describe what you want and Vextar handles the rest.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num active">01</div>
+      <h3>Describe your app</h3>
+      <p>Type what you want to build in plain English. Be as specific or as vague as you like — Vextar understands context.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Vextar builds it</h3>
+      <p>Our AI generates production-ready code with the right stack, structure, and logic — all in seconds.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Download &amp; launch</h3>
+      <p>Get your complete project as a zip or deploy directly. Your code, your rules, zero lock-in.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section class="section fade-in" id="features" style="padding-top:0">
+  <div class="section-tag">Features</div>
+  <h2 class="section-title">Everything you need.<br>Nothing you don't.</h2>
+  <p class="section-sub">Vextar generates complete, real-world applications — not just templates or mockups.</p>
+
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <h3>Instant generation</h3>
+      <p>Full apps generated in seconds. No waiting, no queues. Describe it and it's done.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🧱</div>
+      <h3>Any stack</h3>
+      <p>React, Next.js, Vue, vanilla HTML — Vextar generates whatever stack fits your project best.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔐</div>
+      <h3>Auth built-in</h3>
+      <p>Login, registration, sessions and role management included automatically when needed.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🗄️</div>
+      <h3>Database ready</h3>
+      <p>Schema, queries and CRUD operations generated and wired up to your preferred database.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">💳</div>
+      <h3>Stripe integrated</h3>
+      <p>Subscription pages, checkout flows and webhooks generated and configured automatically.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📦</div>
+      <h3>Export &amp; own it</h3>
+      <p>Download the full project as a zip. Your code, your IP. No lock-in, ever.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section class="section fade-in" id="pricing">
+  <div class="section-tag">Pricing</div>
+  <h2 class="section-title">Simple, honest pricing.</h2>
+  <p class="section-sub">Start free. Pay only when you need more. Cancel anytime.</p>
+
+  <div class="pricing-grid">
+    <!-- Free -->
+    <div class="plan">
+      <div class="plan-name">Free</div>
+      <div class="plan-desc">Perfect to try Vextar and build your first project.</div>
+      <div class="plan-price">
+        <span class="amount">$0</span>
+        <span class="per">/mo</span>
+      </div>
+      <ul class="plan-features">
+        <li>3 app generations</li>
+        <li>Download as zip</li>
+        <li>React + HTML support</li>
+        <li>Community support</li>
+      </ul>
+      <a href="#" class="btn-plan">Get started free</a>
+    </div>
+
+    <!-- Pro — featured -->
+    <div class="plan featured">
+      <div class="plan-badge">Most popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-desc">For builders who ship regularly and need unlimited power.</div>
+      <div class="plan-price">
+        <span class="amount">$29</span>
+        <span class="per">/mo</span>
+      </div>
+      <ul class="plan-features">
+        <li>Unlimited generations</li>
+        <li>All frameworks supported</li>
+        <li>Auth + DB + Stripe included</li>
+        <li>Project history saved</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="#" class="btn-plan">Start Pro free</a>
+    </div>
+
+    <!-- Team -->
+    <div class="plan">
+      <div class="plan-name">Team</div>
+      <div class="plan-desc">For agencies and teams that build products for clients.</div>
+      <div class="plan-price">
+        <span class="amount">$79</span>
+        <span class="per">/mo</span>
+      </div>
+      <ul class="plan-features">
+        <li>Everything in Pro</li>
+        <li>5 team seats</li>
+        <li>Shared project workspace</li>
+        <li>Client export mode</li>
+        <li>Dedicated support</li>
+      </ul>
+      <a href="#" class="btn-plan">Start Team free</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<div class="testimonials fade-in">
+  <div class="testimonials-inner">
+    <div style="text-align:center; margin-bottom: 56px;">
+      <div class="section-tag">Testimonials</div>
+      <h2 class="section-title">Builders love Vextar.</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testi-text">"I described my SaaS idea on a Monday. By Tuesday I had a working prototype with login and Stripe. Vextar is insane."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div>
+            <div class="testi-name">Marcus J.</div>
+            <div class="testi-role">Indie founder</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testi-text">"My agency used to spend 2 weeks on client MVPs. Now we deliver in 2 days. The code quality is actually solid too."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sofia R.</div>
+            <div class="testi-role">Agency owner</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testi-text">"As a non-technical founder this is a game changer. I can now build and test ideas without waiting for a developer."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Alex T.</div>
+            <div class="testi-role">Startup founder</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CTA FINAL ═══ -->
+<div class="cta-final fade-in">
+  <h2>Ready to build<br>with <span class="accent">Vextar</span>?</h2>
+  <p>Join thousands of builders turning ideas into real apps — no code required.</p>
+  <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+    <a href="#" class="btn-hero">Start building free →</a>
+    <a href="#pricing" class="btn-hero-outline">View pricing</a>
+  </div>
+  <div class="hero-note" style="justify-content:center; margin-top:20px;">
+    ✓ No credit card &nbsp;·&nbsp; ✓ 3 free builds &nbsp;·&nbsp; ✓ Cancel anytime
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="footer-logo"><span class="v">v</span>extar<span class="dot">.</span></a>
+    <ul class="footer-links">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Twitter</a></li>
+    </ul>
+    <span class="footer-copy">© 2026 Vextar. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+
+
+</body></html>
