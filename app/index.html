@@ -284,7 +284,9 @@
     document.getElementById('userInput').focus();
   }
 
-  window.addEventListener('load', initClerk);
+  window.addEventListener('load', () => {
+  setTimeout(initClerk, 1500);
+});
 
   // STATE
   let messages = [];
