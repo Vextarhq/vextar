@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" onload="window.__clerkReady=true"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -284,9 +284,11 @@
     document.getElementById('userInput').focus();
   }
 
-  window.addEventListener('load', () => {
-  setTimeout(initClerk, 1500);
-});
+  function waitForClerk() {
+  if (window.Clerk) { initClerk(); }
+  else { setTimeout(waitForClerk, 200); }
+}
+window.addEventListener('load', waitForClerk);
 
   // STATE
   let messages = [];
