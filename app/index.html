@@ -362,7 +362,7 @@ window.addEventListener('load', waitForClerk);
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages })
+        body: JSON.stringify({ messages, userId: window.__userId || null, sessionId: currentSessionId, title: messages[0]?.content?.slice(0, 50) })
       });
       const data = await res.json();
       hideTyping();
