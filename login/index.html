@@ -93,8 +93,8 @@
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js';
     script.onload = async function() {
-      const clerk = new window.Clerk(CLERK_PK);
-      await clerk.load();
+      await window.Clerk.load({ publishableKey: CLERK_PK });
+      const clerk = window.Clerk;
       if (clerk.user) {
         window.location.href = '/app';
         return;
