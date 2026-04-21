@@ -1,16 +1,16 @@
 export default async function handler(req, res) {
-  // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { messages } = req.body;
+  const { messages, userId, sessionId, title } = req.body;
 
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).json({ error: 'Invalid request' });
   }
 
   try {
+    // Call Claude API
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -50,6 +50,52 @@ You support all languages: Python, JavaScript, TypeScript, Rust, Go, Swift, Kotl
 
     const data = await response.json();
     const reply = data.content[0].text;
+
+    // Save to Supabase if userId provided
+    if (userId && process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY) {
+      try {
+        const allMessages = [...messages, { role: 'assistant', content: reply }];
+        const sessionTitle = title || (messages[0]?.content?.slice(0, 50) || 'New chat');
+
+        if (sessionId) {
+          // Update existing conversation
+          await fetch(`${process.env.SUPABASE_URL}/rest/v1/conversations?id=eq.${sessionId}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': process.env.SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`
+            },
+            body: JSON.stringify({
+              messages: allMessages,
+              updated_at: new Date().toISOString()
+            })
+          });
+        } else {
+          // Create new conversation
+          const createRes = await fetch(`${process.env.SUPABASE_URL}/rest/v1/conversations`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': process.env.SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`,
+              'Prefer': 'return=representation'
+            },
+            body: JSON.stringify({
+              user_id: userId,
+              title: sessionTitle,
+              messages: allMessages,
+              updated_at: new Date().toISOString()
+            })
+          });
+          const created = await createRes.json();
+          return res.status(200).json({ reply, sessionId: created[0]?.id });
+        }
+      } catch (dbError) {
+        console.error('Supabase error:', dbError);
+        // Don't fail the request if DB save fails
+      }
+    }
 
     return res.status(200).json({ reply });
 
