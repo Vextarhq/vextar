@@ -258,7 +258,7 @@
   async function initClerk() {
     await window.Clerk.load({ publishableKey: PUBLISHABLE_KEY });
     const user = window.Clerk.user;
-
+window.__userId = user ? user.id : null;
     if (!user) {
       window.location.href = '/login';
       return;
