@@ -274,7 +274,8 @@ async function initClerk() {
       window.location.href = 'https://accounts.vextar.org/sign-out?redirect_url=https://www.vextar.org/login';
     };
   } catch(e) {
-    window.location.href = '/login';
+    console.log('Clerk error:', e);
+  }
   }
   document.getElementById('loading').style.display = 'none';
   renderSidebar();
