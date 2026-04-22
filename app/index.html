@@ -255,41 +255,33 @@
   });
 
   // Clerk init
-  async function initClerk() {
-    await window.Clerk.load({ publishableKey: PUBLISHABLE_KEY });
-    const user = window.Clerk.user;
-window.__userId = user ? user.id : null;
+async function initClerk() {
+  try {
+    const res = await fetch('https://clerk.vextar.org/v1/client', {
+      credentials: 'include'
+    });
+    const data = await res.json();
+    const session = data?.response?.sessions?.[0];
+    const user = session?.user;
     if (!user) {
       window.location.href = '/login';
       return;
     }
-
-    // Show email
+    window.__userId = user.id;
     const emailEl = document.getElementById('userEmail');
-    if (emailEl && user.primaryEmailAddress) {
-      emailEl.textContent = user.primaryEmailAddress.emailAddress;
-    }
-
-    // Sign out
+    if (emailEl) emailEl.textContent = user.email_addresses?.[0]?.email_address || '';
     document.getElementById('signOutBtn').onclick = async () => {
-      await window.Clerk.signOut();
-      window.location.href = '/login';
+      window.location.href = 'https://accounts.vextar.org/sign-out?redirect_url=https://www.vextar.org/login';
     };
-
-    // Hide loading
-    document.getElementById('loading').style.display = 'none';
-
-    renderSidebar();
-    renderMessages();
-    document.getElementById('userInput').focus();
+  } catch(e) {
+    window.location.href = '/login';
   }
-
-  function waitForClerk() {
-  if (window.Clerk) { initClerk(); }
-  else { setTimeout(waitForClerk, 200); }
+  document.getElementById('loading').style.display = 'none';
+  renderSidebar();
+  renderMessages();
+  document.getElementById('userInput').focus();
 }
-window.addEventListener('load', waitForClerk);
-
+window.addEventListener('load', initClerk);
   // STATE
   let messages = [];
   let isLoading = false;
